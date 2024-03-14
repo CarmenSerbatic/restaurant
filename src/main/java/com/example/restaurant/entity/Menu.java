@@ -3,7 +3,7 @@ package com.example.restaurant.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-
+import java.util.Set;
 
 
 @Entity
@@ -18,27 +18,19 @@ public class Menu {
 
     @Column(name="date")
     private LocalDate date;
-    @Column(name="dish1")
-    private String dish1;
-    @Column(name="dish2")
-    private String dish2;
-    @Column(name="dish3")
-    private String dish3;
-    @Column(name="dish4")
-    private String dish4;
+    @Column(name="dish")
+    private String dish;
+
     @Column(name="price")
-    private float price;
+    private Float price;
 
     public Menu() {
     }
 
-    public Menu(int id_menu, LocalDate date, String dish1, String dish2, String dish3, String dish4, float price) {
+    public Menu(int id_menu, LocalDate date, String dish, Float price) {
         this.id_menu = id_menu;
         this.date = date;
-        this.dish1 = dish1;
-        this.dish2 = dish2;
-        this.dish3 = dish3;
-        this.dish4 = dish4;
+        this.dish = dish;
         this.price = price;
     }
 
@@ -58,43 +50,19 @@ public class Menu {
         this.date = date;
     }
 
-    public String getDish1() {
-        return dish1;
+    public String getDish() {
+        return dish;
     }
 
-    public void setDish1(String dish1) {
-        this.dish1 = dish1;
+    public void setDish(String dish) {
+        this.dish = dish;
     }
 
-    public String getDish2() {
-        return dish2;
-    }
-
-    public void setDish2(String dish2) {
-        this.dish2 = dish2;
-    }
-
-    public String getDish3() {
-        return dish3;
-    }
-
-    public void setDish3(String dish3) {
-        this.dish3 = dish3;
-    }
-
-    public String getDish4() {
-        return dish4;
-    }
-
-    public void setDish4(String dish4) {
-        this.dish4 = dish4;
-    }
-
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -103,10 +71,7 @@ public class Menu {
         return "Menu{" +
                 "id_menu=" + id_menu +
                 ", date=" + date +
-                ", dish1='" + dish1 + '\'' +
-                ", dish2='" + dish2 + '\'' +
-                ", dish3='" + dish3 + '\'' +
-                ", dish4='" + dish4 + '\'' +
+                ", dish='" + dish + '\'' +
                 ", price=" + price +
                 '}';
     }

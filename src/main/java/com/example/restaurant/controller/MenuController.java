@@ -1,5 +1,6 @@
 package com.example.restaurant.controller;
 
+import com.example.restaurant.entity.Dish;
 import com.example.restaurant.entity.Menu;
 import com.example.restaurant.service.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,6 +41,19 @@ public class MenuController {
             return ResponseEntity.ok(menu);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/day")
+    @Operation(description = "Find menu by id")
+    public List<Dish> findByDate(){
+        List<Menu> menus = menuService.findMenusDay();
+        List<Dish> dishes = new ArrayList<Dish>();
+        for (Menu m : menus){
+            System.out.println(m);
+            Dish dish = new Dish(m.getDish(), m.getDate());
+            dishes.add(dish);
+        }
+        return dishes;
     }
 
     @PostMapping("/")

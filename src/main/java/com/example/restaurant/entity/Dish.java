@@ -1,17 +1,18 @@
 package com.example.restaurant.entity;
 
+import java.time.LocalDate;
+
 public class Dish {
 
-
     private String name;
-    private Float price;
+    private LocalDate date;
 
     public Dish() {
     }
 
-    public Dish(String name, Float price) {
+    public Dish(String name, LocalDate date) {
         this.name = name;
-        this.price = price;
+        this.date = date;
     }
 
     public String getName() {
@@ -22,19 +23,19 @@ public class Dish {
         this.name = name;
     }
 
-    public Float getPrice() {
-        return price;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
         return "Dish{" +
                 "name='" + name + '\'' +
-                ", price=" + price +
+                ", date=" + date +
                 '}';
     }
 }

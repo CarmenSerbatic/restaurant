@@ -7,6 +7,7 @@ import java.util.List;
 public interface MenuService {
 
     public List<Menu> findAllMenus();
+    public List<Menu> findMenusDay();
 
     public Menu findMenuById(int id);
 

@@ -5,6 +5,7 @@ import com.example.restaurant.repository.MenuDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,12 @@ public class MenuServiceImpl implements MenuService{
         }
 
         return menu;
+    }
+
+    @Override
+    public List<Menu> findMenusDay() {
+
+        return menuDAO.findByDate(LocalDate.now());
     }
 
     @Override
