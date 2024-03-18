@@ -50,7 +50,7 @@ public class MenuController {
         List<Dish> dishes = new ArrayList<Dish>();
         for (Menu m : menus){
             System.out.println(m);
-            Dish dish = new Dish(m.getDish(), m.getDate());
+            Dish dish = new Dish(m.getDish(), m.getPrice());
             dishes.add(dish);
         }
         return dishes;

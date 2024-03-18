@@ -5,14 +5,14 @@ import java.time.LocalDate;
 public class Dish {
 
     private String name;
-    private LocalDate date;
+    private Float price;
 
     public Dish() {
     }
 
-    public Dish(String name, LocalDate date) {
+    public Dish(String name, Float price) {
         this.name = name;
-        this.date = date;
+        this.price = price;
     }
 
     public String getName() {
@@ -23,19 +23,19 @@ public class Dish {
         this.name = name;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Float getPrice() {
+        return price;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
     @Override
     public String toString() {
         return "Dish{" +
                 "name='" + name + '\'' +
-                ", date=" + date +
+                ", price=" + price +
                 '}';
     }
 }
