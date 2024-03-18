@@ -1,4 +1,4 @@
-package com.example.restaurant.entity;
+package com.example.restaurant.data.entity;
 
 import jakarta.persistence.*;
 

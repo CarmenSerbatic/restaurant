@@ -1,4 +1,4 @@
-package com.example.restaurant.entity;
+package com.example.restaurant.presentation.dto;
 
 import java.time.LocalDate;
 

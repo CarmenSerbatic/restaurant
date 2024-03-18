@@ -1,6 +1,6 @@
 package com.example.restaurant.service;
 
-import com.example.restaurant.entity.Menu;
+import com.example.restaurant.data.entity.Menu;
 
 import java.util.List;
 

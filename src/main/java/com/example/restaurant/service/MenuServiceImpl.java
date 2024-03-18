@@ -1,7 +1,7 @@
 package com.example.restaurant.service;
 
-import com.example.restaurant.entity.Menu;
-import com.example.restaurant.repository.MenuDAO;
+import com.example.restaurant.data.entity.Menu;
+import com.example.restaurant.data.repository.MenuDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

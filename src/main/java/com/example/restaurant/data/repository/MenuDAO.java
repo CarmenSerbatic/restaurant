@@ -1,6 +1,6 @@
-package com.example.restaurant.repository;
+package com.example.restaurant.data.repository;
 
-import com.example.restaurant.entity.Menu;
+import com.example.restaurant.data.entity.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

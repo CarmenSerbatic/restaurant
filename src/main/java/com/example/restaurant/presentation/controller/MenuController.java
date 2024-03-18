@@ -1,7 +1,7 @@
-package com.example.restaurant.controller;
+package com.example.restaurant.presentation.controller;
 
-import com.example.restaurant.entity.Dish;
-import com.example.restaurant.entity.Menu;
+import com.example.restaurant.presentation.dto.Dish;
+import com.example.restaurant.data.entity.Menu;
 import com.example.restaurant.service.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
@@ -44,7 +44,7 @@ public class MenuController {
     }
 
     @GetMapping("/day")
-    @Operation(description = "Find menu by id")
+    @Operation(description = "Find menu by date")
     public List<Dish> findByDate(){
         List<Menu> menus = menuService.findMenusDay();
         List<Dish> dishes = new ArrayList<Dish>();

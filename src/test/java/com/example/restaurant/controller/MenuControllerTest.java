@@ -1,7 +1,6 @@
 package com.example.restaurant.controller;
 
-import com.example.restaurant.entity.Menu;
-import org.junit.jupiter.api.AfterEach;
+import com.example.restaurant.data.entity.Menu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
