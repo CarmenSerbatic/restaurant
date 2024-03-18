@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name= "order")
+@Table(name= "orderes")
 public class Order {
 
     @Id
@@ -17,19 +17,22 @@ public class Order {
     private Long id_order;
     @Column(name="date")
     private LocalDate date;
-    @Column(name="food")
-    private Set<Food> foods;
+
+    @ManyToMany
+    @JoinTable(name = "menu_order", joinColumns = @JoinColumn(name = "id_order") , inverseJoinColumns = @JoinColumn(name ="id_menu"))
+    @Column(name="menu")
+    private Set<Menu> menus;
     @Column(name="finalized")
     private boolean finalized;
 
     public Order() {
     }
 
-    public Order(Long id_order, LocalDate date, Set<Food> foods, boolean finalized) {
+    public Order(Long id_order, LocalDate date, Set<Menu> menus, boolean finalized) {
         this.id_order = id_order;
         this.date = date;
-        this.foods = foods;
-        this.finalized = finalized;
+        this.menus = menus;
+        this.finalized = false;
     }
 
     public Long getId_order() {
@@ -63,7 +66,7 @@ public class Order {
         return "Order{" +
                 "id_order=" + id_order +
                 ", date=" + date +
-                ", foods=" + foods +
+                ", menus=" + menus +
                 ", finalized=" + finalized +
                 '}';
     }

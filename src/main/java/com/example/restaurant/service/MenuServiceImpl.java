@@ -1,7 +1,7 @@
 package com.example.restaurant.service;
 
 import com.example.restaurant.data.entity.Menu;
-import com.example.restaurant.data.repository.MenuDAO;
+import com.example.restaurant.data.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +12,16 @@ import java.util.Optional;
 @Service
 public class MenuServiceImpl implements MenuService{
     @Autowired
-    private MenuDAO menuDAO;
+    private MenuRepository menuRepository;
     @Override
     public List<Menu> findAllMenus() {
-        return menuDAO.findAll();
+        return menuRepository.findAll();
     }
 
     @Override
     public Menu findMenuById(int id) {
         Menu menu = null;
-        Optional<Menu> result = menuDAO.findById(id);
+        Optional<Menu> result = menuRepository.findById(id);
 
         if (result.isPresent()){
             menu = result.get();
@@ -33,12 +33,12 @@ public class MenuServiceImpl implements MenuService{
     @Override
     public List<Menu> findMenusDay() {
 
-        return menuDAO.findByDate(LocalDate.now());
+        return menuRepository.findByDate(LocalDate.now());
     }
 
     @Override
     public void addMenu(Menu menu) {
-        menuDAO.save(menu);
+        menuRepository.save(menu);
     }
 
     @Override
@@ -48,6 +48,6 @@ public class MenuServiceImpl implements MenuService{
 
     @Override
     public void deleteMenuById(int id) {
-        menuDAO.deleteById(id);
+        menuRepository.deleteById(id);
     }
 }
