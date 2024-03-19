@@ -2,17 +2,22 @@ package com.example.restaurant.presentation.dto;
 
 public class Food {
 
-    private Dish dish;
+    private String dish;
     private int amount;
 
     public Food() {
     }
 
-    public Dish getDish() {
+    public Food(String dish, int amount) {
+        this.dish = dish;
+        this.amount = amount;
+    }
+
+    public String getDish() {
         return dish;
     }
 
-    public void setDish(Dish dish) {
+    public void setDish(String dish) {
         this.dish = dish;
     }
 

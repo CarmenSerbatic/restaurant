@@ -1,10 +1,10 @@
 package com.example.restaurant.data.entity;
 
-import com.example.restaurant.presentation.dto.Dish;
-import com.example.restaurant.presentation.dto.Food;
+
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,15 +20,14 @@ public class Order {
 
     @ManyToMany
     @JoinTable(name = "menu_order", joinColumns = @JoinColumn(name = "id_order") , inverseJoinColumns = @JoinColumn(name ="id_menu"))
-    @Column(name="menu")
-    private Set<Menu> menus;
+    private List<Menu> menus;
     @Column(name="finalized")
-    private boolean finalized;
+    private boolean finalized = false;
 
     public Order() {
     }
 
-    public Order(Long id_order, LocalDate date, Set<Menu> menus, boolean finalized) {
+    public Order(Long id_order, LocalDate date, List<Menu> menus) {
         this.id_order = id_order;
         this.date = date;
         this.menus = menus;
@@ -51,7 +50,13 @@ public class Order {
         this.date = date;
     }
 
+    public List<Menu> getMenus() {
+        return menus;
+    }
 
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
+    }
 
     public boolean isFinalized() {
         return finalized;

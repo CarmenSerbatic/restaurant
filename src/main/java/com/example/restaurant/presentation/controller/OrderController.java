@@ -3,7 +3,8 @@ package com.example.restaurant.presentation.controller;
 import com.example.restaurant.data.entity.Menu;
 import com.example.restaurant.data.entity.Order;
 import com.example.restaurant.presentation.dto.Dish;
-;import com.example.restaurant.service.OrderService;
+;import com.example.restaurant.presentation.dto.Food;
+import com.example.restaurant.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/order")
@@ -46,13 +49,34 @@ public class OrderController {
     @GetMapping("/day")
     @Operation(description = "Find orders by date")
     public List<Order> findByDate(){
+
         List<Order> orders = orderService.findOrderDay();
-//        List<Dish> dishes = new ArrayList<Dish>();
-//        for (Menu m : menus){
-//            System.out.println(m);
-//            Dish dish = new Dish(m.getDish(), m.getPrice());
-//            dishes.add(dish);
-//        }
+
+        return orders;
+    }
+
+
+    @GetMapping("/kichen/{id}")
+    @Operation(description = "")
+    public List<Food> showOrderToKichen(@PathVariable Long id){
+
+        Order order = orderService.findOrderById(id);
+
+        if ( order != null) {
+            return orderService.showOrderToKichen(order);
+        } else {
+            return null;
+        }
+
+    }
+
+
+    @GetMapping("/finalized")
+    @Operation(description = "Find orders by finalized is true")
+    public List<Order> findOrderByFinalized(){
+
+        List<Order> orders = orderService.findOrderFinalized();
+
         return orders;
     }
 

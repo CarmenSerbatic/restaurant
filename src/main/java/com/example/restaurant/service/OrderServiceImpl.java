@@ -1,18 +1,21 @@
 package com.example.restaurant.service;
 
+
 import com.example.restaurant.data.entity.Menu;
 import com.example.restaurant.data.entity.Order;
 import com.example.restaurant.data.repository.OrderRepository;
-import com.example.restaurant.presentation.dto.Dish;
+
+import com.example.restaurant.presentation.dto.Food;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService{
 
+    @Autowired
     private OrderRepository orderRepository;
     @Override
     public List<Order> findAllOrder() {
@@ -27,14 +30,51 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public List<Order> findOrderFinalized() {
         List<Order> orders = orderRepository.findByDate(LocalDate.now());
-        List<Order> ordersFinalized = null;
+        List<Order> ordersFinalized = new ArrayList<Order>();
         for (Order o : orders){
-            System.out.println(o);
+
             if (o.isFinalized()){
                 ordersFinalized.add(o);
             }
         }
         return ordersFinalized;
+    }
+
+    @Override
+    public List<Order> findOrderNotFinalized() {
+        List<Order> orders = orderRepository.findByDate(LocalDate.now());
+        List<Order> ordersNotFinalized = new ArrayList<Order>();
+        for (Order o : orders){
+
+            if (o.isFinalized() == false){
+                ordersNotFinalized.add(o);
+            }
+        }
+        return ordersNotFinalized;
+    }
+
+    @Override
+    public List<Food> showOrderToKichen(Order order) {
+
+
+        List<Food> foodes = new ArrayList<Food>();
+
+        // Get order menus
+        List<Menu>menus = order.getMenus();
+
+        // Iterate over the menus in the order and count the occurrences of each menu object
+        for (Menu menu : menus) {
+            int cont = 0;
+            for (Menu menucompair : menus) {
+                if(menu.equals(menucompair)){
+                    cont ++;
+                }
+            }
+            Food food = new Food(menu.getDish(),cont);
+            foodes.add(food);
+        }
+
+        return foodes;
     }
 
     @Override
