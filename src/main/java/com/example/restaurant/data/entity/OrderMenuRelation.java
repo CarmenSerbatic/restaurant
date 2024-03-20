@@ -1,6 +1,7 @@
 package com.example.restaurant.data.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -19,6 +20,7 @@ public class OrderMenuRelation {
     private Menu menu;
 
     @ManyToOne
+    @JsonIgnore
 //    @JoinColumn(name="id_order")
     private Order order;
     @Column(name = "quantity")
