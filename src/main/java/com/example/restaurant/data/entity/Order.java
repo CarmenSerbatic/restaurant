@@ -1,14 +1,17 @@
 package com.example.restaurant.data.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Table(name= "orderes")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order {
 
     @Id
@@ -18,19 +21,23 @@ public class Order {
     @Column(name="date")
     private LocalDate date;
 
-    @ManyToMany
-    @JoinTable(name = "menu_order", joinColumns = @JoinColumn(name = "id_order") , inverseJoinColumns = @JoinColumn(name ="id_menu"))
-    private List<Menu> menus;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id_relation_menu_order")
+    private List<OrderMenuRelation> orderMenuRelations;
     @Column(name="finalized")
     private boolean finalized = false;
 
     public Order() {
     }
 
-    public Order(Long id_order, LocalDate date, List<Menu> menus) {
-        this.id_order = id_order;
+    public Order(LocalDate date, List<OrderMenuRelation> orderMenuRelations, boolean finalized) {
         this.date = date;
-        this.menus = menus;
+        this.orderMenuRelations = orderMenuRelations;
+        this.finalized = finalized;
+    }
+
+    public Order(LocalDate date, boolean finalized) {
+        this.date = date;
         this.finalized = false;
     }
 
@@ -50,12 +57,12 @@ public class Order {
         this.date = date;
     }
 
-    public List<Menu> getMenus() {
-        return menus;
+    public List<OrderMenuRelation> getOrderMenuRelations() {
+        return orderMenuRelations;
     }
 
-    public void setMenus(List<Menu> menus) {
-        this.menus = menus;
+    public void setOrderMenuRelations(List<OrderMenuRelation> orderMenuRelations) {
+        this.orderMenuRelations = orderMenuRelations;
     }
 
     public boolean isFinalized() {
@@ -71,7 +78,7 @@ public class Order {
         return "Order{" +
                 "id_order=" + id_order +
                 ", date=" + date +
-                ", menus=" + menus +
+//                ", orderMenuRelations=" + orderMenuRelations +
                 ", finalized=" + finalized +
                 '}';
     }

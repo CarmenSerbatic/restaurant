@@ -1,8 +1,10 @@
 package com.example.restaurant.service;
 
 
-import com.example.restaurant.data.entity.Menu;
+
 import com.example.restaurant.data.entity.Order;
+import com.example.restaurant.data.entity.OrderMenuRelation;
+import com.example.restaurant.data.repository.OrderMenuRelationRepository;
 import com.example.restaurant.data.repository.OrderRepository;
 
 import com.example.restaurant.presentation.dto.Food;
@@ -17,6 +19,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderMenuRelationRepository orderMenuRelationRepository;
     @Override
     public List<Order> findAllOrder() {
         return orderRepository.findAll();
@@ -60,17 +65,17 @@ public class OrderServiceImpl implements OrderService{
         List<Food> foodes = new ArrayList<Food>();
 
         // Get order menus
-        List<Menu>menus = order.getMenus();
+        List<OrderMenuRelation> relations = order.getOrderMenuRelations();
 
         // Iterate over the menus in the order and count the occurrences of each menu object
-        for (Menu menu : menus) {
-            int cont = 0;
-            for (Menu menucompair : menus) {
-                if(menu.equals(menucompair)){
-                    cont ++;
-                }
-            }
-            Food food = new Food(menu.getDish(),cont);
+        for (OrderMenuRelation o : relations) {
+//            int cont = 0;
+//            for (Menu menucompair : menus) {
+//                if(menu.equals(menucompair)){
+//                    cont ++;
+//                }
+//            }
+            Food food = new Food(o.getMenu().getDish(),o.getQuantity());
             foodes.add(food);
         }
 
@@ -90,8 +95,27 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void addOrder(Order order) {
-        orderRepository.save(order);
+    public Order addOrder(Order order) {
+        List<OrderMenuRelation> relations = order.getOrderMenuRelations();
+        for (OrderMenuRelation o : relations) {
+            o.setOrder(order);
+
+//           if(orderMenuRelationRepository.findById(o.getId_relation()) == null){
+//
+//               orderMenuRelationRepository.save(o);
+//           }
+        }
+        return orderRepository.save(order);
+
+//        for (OrderMenuRelation o : relations) {
+//
+//           if(orderMenuRelationRepository.findById(o.getId_relation()) == null){
+//
+//               orderMenuRelationRepository.save(o);
+//           }
+//        }
+
+
     }
 
     @Override

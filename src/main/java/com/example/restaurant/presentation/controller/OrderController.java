@@ -1,9 +1,10 @@
 package com.example.restaurant.presentation.controller;
 
-import com.example.restaurant.data.entity.Menu;
+
 import com.example.restaurant.data.entity.Order;
-import com.example.restaurant.presentation.dto.Dish;
-;import com.example.restaurant.presentation.dto.Food;
+
+import com.example.restaurant.data.entity.OrderMenuRelation;
+import com.example.restaurant.presentation.dto.Food;
 import com.example.restaurant.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
@@ -11,11 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/order")
@@ -91,7 +89,7 @@ public class OrderController {
             }
 
             //Create new order
-            orderService.addOrder(order);
+            order = orderService.addOrder(order);
             return ResponseEntity.ok(order);
         } else {
             return ResponseEntity.badRequest().build();

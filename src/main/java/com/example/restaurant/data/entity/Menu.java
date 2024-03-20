@@ -3,7 +3,8 @@ package com.example.restaurant.data.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
+
 
 
 @Entity
@@ -24,6 +25,10 @@ public class Menu {
     @Column(name="price")
     private Float price;
 
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL )
+//    @JoinColumn(name = "id_relation_menu_order")
+    private List<OrderMenuRelation> orderMenuRelations;
+
     public Menu() {
     }
 
@@ -33,6 +38,8 @@ public class Menu {
         this.dish = dish;
         this.price = price;
     }
+
+
 
     public int getId_menu() {
         return id_menu;

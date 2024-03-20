@@ -17,7 +17,7 @@ public interface OrderService {
 
     public List<Food> showOrderToKichen(Order order);
 
-    public void addOrder(Order order);
+    public Order addOrder(Order order);
     public void updateOrder(Order order);
     public void deleteOrderById(long id);
 }
