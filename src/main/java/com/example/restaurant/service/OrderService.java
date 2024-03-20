@@ -15,7 +15,7 @@ public interface OrderService {
     public List<Order> findOrderNotFinalized();
     public Order findOrderById(long id);
 
-    public List<Food> showOrderToKichen(Order order);
+    public List<Food> showOrderToKitchen(Order order);
 
     public Order addOrder(Order order);
     public void updateOrder(Order order);

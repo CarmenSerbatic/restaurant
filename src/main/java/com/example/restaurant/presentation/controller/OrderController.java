@@ -54,16 +54,16 @@ public class OrderController {
     }
 
 
-    @GetMapping("/kichen/{id}")
+    @GetMapping("/kitchen/{id}")
     @Operation(description = "")
-    public List<Food> showOrderToKichen(@PathVariable Long id){
+    public ResponseEntity<List<Food>> showOrderToKitchen(@PathVariable Long id){
 
         Order order = orderService.findOrderById(id);
 
         if ( order != null) {
-            return orderService.showOrderToKichen(order);
+            return ResponseEntity.ok(orderService.showOrderToKitchen(order));
         } else {
-            return null;
+            return ResponseEntity.notFound().build();
         }
 
     }

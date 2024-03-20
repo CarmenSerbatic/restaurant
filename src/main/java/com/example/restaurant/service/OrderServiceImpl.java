@@ -59,23 +59,20 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<Food> showOrderToKichen(Order order) {
+    public List<Food> showOrderToKitchen(Order order) {
 
 
         List<Food> foodes = new ArrayList<Food>();
 
-        // Get order menus
+        // Get List of OrdenMenurelation by this order
         List<OrderMenuRelation> relations = order.getOrderMenuRelations();
 
         // Iterate over the menus in the order and count the occurrences of each menu object
         for (OrderMenuRelation o : relations) {
-//            int cont = 0;
-//            for (Menu menucompair : menus) {
-//                if(menu.equals(menucompair)){
-//                    cont ++;
-//                }
-//            }
+
+            //save data we need in the dto Food and save in foodes
             Food food = new Food(o.getMenu().getDish(),o.getQuantity());
+
             foodes.add(food);
         }
 
