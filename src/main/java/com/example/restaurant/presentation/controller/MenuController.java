@@ -25,7 +25,7 @@ public class MenuController {
 
     /**
      * List all menus
-     * http://localhost:8081/menu/list
+     * http://localhost:8081/menu/
      * @return List<Menu>
      */
     @GetMapping("/")
@@ -44,6 +44,11 @@ public class MenuController {
 
     }
 
+    /**
+     * Find one menu by Id
+     * http://localhost:8081/menu/{id}
+     * @return ResponseEntity
+     */
     @GetMapping("/{id}")
     @Operation(description = "Find menu by id")
     public ResponseEntity<Menu> findOneById(@PathVariable int id){
@@ -59,6 +64,12 @@ public class MenuController {
         return ResponseEntity.notFound().build();
     }
 
+
+    /**
+     * Get the dishes of the day
+     * http://localhost:8081/menu/day
+     * @return ResponseEntity
+     */
     @GetMapping("/day")
     @Operation(description = "Find menu by date")
     public ResponseEntity<List<Dish>> findByDate(){
@@ -82,6 +93,12 @@ public class MenuController {
 
     }
 
+
+    /**
+     * Create new Menu
+     * @param menu
+     * @return ResponseEntity
+     */
     @PostMapping("/")
     public ResponseEntity<Menu> create(@RequestBody Menu menu){
 

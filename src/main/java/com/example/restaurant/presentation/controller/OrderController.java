@@ -26,7 +26,7 @@ public class OrderController {
 
     /**
      * List all orders
-     * http://localhost:8081/order/list
+     * http://localhost:8081/order/
      * @return List<Order>
      */
     @GetMapping("/")
