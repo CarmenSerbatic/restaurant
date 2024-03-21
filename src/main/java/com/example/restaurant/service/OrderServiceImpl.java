@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService{
         List<Order> ordersFinalized = new ArrayList<Order>();
         for (Order o : orders){
 
-            if (o.isFinalized()){
+            if (o.getFinalized()){
                 ordersFinalized.add(o);
             }
         }
@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService{
         List<Order> ordersNotFinalized = new ArrayList<Order>();
         for (Order o : orders){
 
-            if (o.isFinalized() == false){
+            if (o.getFinalized() == false){
                 ordersNotFinalized.add(o);
             }
         }
@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService{
         // Get List of OrdenMenurelation by this order
         List<OrderMenuRelation> relations = order.getOrderMenuRelations();
 
-        // Iterate over the menus in the order and count the occurrences of each menu object
+        // Iterate over the orders and save values of dish and amount in the food object.
         for (OrderMenuRelation o : relations) {
 
             //save data we need in the dto Food and save in foodes
@@ -81,7 +81,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Order findOrderById(long id) {
+
         Order order = null;
+
         Optional<Order> result = orderRepository.findById(id);
 
         if (result.isPresent()){
@@ -93,31 +95,33 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Order addOrder(Order order) {
+
+         /*                    -------IMPORTANT----
+         You must first save the relations objects before saving the order so that the relationship
+         between both is created correctly
+         */
+
+        // Get List of OrdenMenurelation by this order
         List<OrderMenuRelation> relations = order.getOrderMenuRelations();
+
+        // Iterates the relations list and saves each object
         for (OrderMenuRelation o : relations) {
             o.setOrder(order);
-
-//           if(orderMenuRelationRepository.findById(o.getId_relation()) == null){
-//
-//               orderMenuRelationRepository.save(o);
-//           }
         }
+
+        //Save the new order
         return orderRepository.save(order);
-
-//        for (OrderMenuRelation o : relations) {
-//
-//           if(orderMenuRelationRepository.findById(o.getId_relation()) == null){
-//
-//               orderMenuRelationRepository.save(o);
-//           }
-//        }
-
 
     }
 
     @Override
-    public void updateOrder(Order order) {
+    public Order changeOrderToFinished(Order order) {
 
+        //change finalized to true
+        order.setFinalized(true);
+
+        //Save order, overwrite object
+        return orderRepository.save(order);
     }
 
     @Override

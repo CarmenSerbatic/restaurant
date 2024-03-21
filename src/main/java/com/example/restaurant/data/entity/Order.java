@@ -1,11 +1,9 @@
 package com.example.restaurant.data.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -65,7 +63,7 @@ public class Order {
         this.orderMenuRelations = orderMenuRelations;
     }
 
-    public boolean isFinalized() {
+    public boolean getFinalized() {
         return finalized;
     }
 

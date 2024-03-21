@@ -3,13 +3,13 @@ package com.example.restaurant.presentation.controller;
 
 import com.example.restaurant.data.entity.Order;
 
-import com.example.restaurant.data.entity.OrderMenuRelation;
 import com.example.restaurant.presentation.dto.Food;
 import com.example.restaurant.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -31,16 +31,23 @@ public class OrderController {
      */
     @GetMapping("/list")
     public List<Order> findAll(){
+
         return orderService.findAllOrder();
+
     }
 
     @GetMapping("/{id}")
     @Operation(description = "Find order by id")
     public ResponseEntity<Order> findOneById(@PathVariable Long id){
+
         Order order = orderService.findOrderById(id);
+
         if(order != null){
+
             return ResponseEntity.ok(order);
         }
+
+        log.error("Not found object with that id");
         return ResponseEntity.notFound().build();
     }
 
@@ -61,8 +68,12 @@ public class OrderController {
         Order order = orderService.findOrderById(id);
 
         if ( order != null) {
+
             return ResponseEntity.ok(orderService.showOrderToKitchen(order));
+
         } else {
+
+            log.error("Not found object with that id");
             return ResponseEntity.notFound().build();
         }
 
@@ -84,37 +95,50 @@ public class OrderController {
         if(order != null){
             // If exist id, cannot create new menu
             if(orderService.findOrderById(order.getId_order()) != null){
-                log.warn("trying to create a order with id");
+
+                log.error("There is already an order with that id");
                 return ResponseEntity.badRequest().build();
             }
 
             //Create new order
             order = orderService.addOrder(order);
+
+            log.warn("trying to save an new order");
             return ResponseEntity.ok(order);
+
         } else {
+
+            log.error("the order was already finished");
             return ResponseEntity.badRequest().build();
         }
 
     }
 
-    @PutMapping("/finalized")
-    public ResponseEntity<Order> updateFinalized(@RequestBody Order order){
+    @PutMapping("/finalized/{id}")
+    public ResponseEntity<Order> changeOrderToFinished(@PathVariable Long id){
 
-        if(order != null){
-            // If exist id, cannot create new menu
-            if(orderService.findOrderById(order.getId_order()) != null){
-                log.warn("trying to create a order with id");
-                return ResponseEntity.badRequest().build();
+        Order order = orderService.findOrderById(id);
+
+            // If exist id, change finalized to true
+            if(order != null){
+
+                if (order.getFinalized()){
+
+                    log.error("the order was already finished");
+                    return new ResponseEntity<>(order, HttpStatus.NOT_ACCEPTABLE);
+
+                }else{
+
+                    log.warn("trying to update an order with id "+id+" to finished");
+                    return ResponseEntity.ok(orderService.changeOrderToFinished(order));
+                }
+
             } else {
-                return ResponseEntity.notFound().build();
-            }
 
-            //Create new order
-//            orderService.addOrder(order);
-//            return ResponseEntity.ok(order);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
+                log.error("Not found object with that id");
+                return ResponseEntity.notFound().build();
+
+            }
 
     }
 
