@@ -28,10 +28,19 @@ public class MenuController {
      * http://localhost:8081/menu/list
      * @return List<Menu>
      */
-    @GetMapping("/list")
-    public List<Menu> findAll(){
+    @GetMapping("/")
+    public ResponseEntity<List<Menu>> findAll(){
 
-        return menuService.findAllMenus();
+        List<Menu> menus = menuService.findAllMenus();
+
+        if (!menus.isEmpty()){
+
+            return ResponseEntity.ok(menus);
+
+        } else {
+            log.error("Not found objects, the list is empty");
+            return ResponseEntity.notFound().build();
+        }
 
     }
 
@@ -52,18 +61,25 @@ public class MenuController {
 
     @GetMapping("/day")
     @Operation(description = "Find menu by date")
-    public List<Dish> findByDate(){
+    public ResponseEntity<List<Dish>> findByDate(){
 
         List<Menu> menus = menuService.findMenusDay();
         List<Dish> dishes = new ArrayList<Dish>();
 
-        for (Menu m : menus){
+        if(!menus.isEmpty()){
+            for (Menu m : menus){
 
-            Dish dish = new Dish(m.getDish(), m.getPrice());
-            dishes.add(dish);
+                Dish dish = new Dish(m.getDish(), m.getPrice());
+                dishes.add(dish);
+            }
+
+            return ResponseEntity.ok(dishes);
+        } else {
+
+            log.error("Not found objects, the list is empty");
+            return ResponseEntity.notFound().build();
         }
 
-        return dishes;
     }
 
     @PostMapping("/")

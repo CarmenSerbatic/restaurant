@@ -4,7 +4,6 @@ package com.example.restaurant.service;
 
 import com.example.restaurant.data.entity.Order;
 import com.example.restaurant.data.entity.OrderMenuRelation;
-import com.example.restaurant.data.repository.OrderMenuRelationRepository;
 import com.example.restaurant.data.repository.OrderRepository;
 
 import com.example.restaurant.presentation.dto.Food;
@@ -20,12 +19,27 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
-    private OrderMenuRelationRepository orderMenuRelationRepository;
+
     @Override
     public List<Order> findAllOrder() {
         return orderRepository.findAll();
     }
+
+
+    @Override
+    public Order findOrderById(long id) {
+
+        Order order = null;
+
+        Optional<Order> result = orderRepository.findById(id);
+
+        if (result.isPresent()){
+            order = result.get();
+        }
+
+        return order;
+    }
+
 
     @Override
     public List<Order> findOrderDay() {
@@ -34,29 +48,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<Order> findOrderFinalized() {
-        List<Order> orders = orderRepository.findByDate(LocalDate.now());
-        List<Order> ordersFinalized = new ArrayList<Order>();
-        for (Order o : orders){
 
-            if (o.getFinalized()){
-                ordersFinalized.add(o);
-            }
-        }
-        return ordersFinalized;
+        List<Order> orders = orderRepository.findByFinalizedAndDate(true , LocalDate.now());
+
+        return orders;
     }
 
-    @Override
-    public List<Order> findOrderNotFinalized() {
-        List<Order> orders = orderRepository.findByDate(LocalDate.now());
-        List<Order> ordersNotFinalized = new ArrayList<Order>();
-        for (Order o : orders){
-
-            if (o.getFinalized() == false){
-                ordersNotFinalized.add(o);
-            }
-        }
-        return ordersNotFinalized;
-    }
 
     @Override
     public List<Food> showOrderToKitchen(Order order) {
@@ -79,19 +76,7 @@ public class OrderServiceImpl implements OrderService{
         return foodes;
     }
 
-    @Override
-    public Order findOrderById(long id) {
 
-        Order order = null;
-
-        Optional<Order> result = orderRepository.findById(id);
-
-        if (result.isPresent()){
-            order = result.get();
-        }
-
-        return order;
-    }
 
     @Override
     public Order addOrder(Order order) {
@@ -124,8 +109,8 @@ public class OrderServiceImpl implements OrderService{
         return orderRepository.save(order);
     }
 
-    @Override
-    public void deleteOrderById(long id) {
-
-    }
+//    @Override
+//    public void deleteOrderById(long id) {
+//
+//    }
 }

@@ -29,11 +29,20 @@ public class OrderController {
      * http://localhost:8081/order/list
      * @return List<Order>
      */
-    @GetMapping("/list")
-    public List<Order> findAll(){
+    @GetMapping("/")
+    public ResponseEntity<List<Order>> findAll(){
 
-        return orderService.findAllOrder();
+        List<Order> orders = orderService.findAllOrder();
 
+        if (!orders.isEmpty()){
+
+            return ResponseEntity.ok(orders);
+
+        } else {
+
+            log.error("Not found objects, the list is empty");
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}")
@@ -53,11 +62,19 @@ public class OrderController {
 
     @GetMapping("/day")
     @Operation(description = "Find orders by date")
-    public List<Order> findByDate(){
+    public ResponseEntity<List<Order>> findByDate(){
 
         List<Order> orders = orderService.findOrderDay();
 
-        return orders;
+        if (!orders.isEmpty()){
+
+            return ResponseEntity.ok(orders);
+
+        } else {
+
+            log.error("Not found objects, the list is empty");
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
@@ -82,11 +99,18 @@ public class OrderController {
 
     @GetMapping("/finalized")
     @Operation(description = "Find orders by finalized is true")
-    public List<Order> findOrderByFinalized(){
+    public ResponseEntity<List<Order>> findOrderByFinalized(){
 
         List<Order> orders = orderService.findOrderFinalized();
 
-        return orders;
+        if (!orders.isEmpty()){
+
+            return ResponseEntity.ok(orders);
+
+        } else {
+            log.error("Not found objects, the list is empty");
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/")

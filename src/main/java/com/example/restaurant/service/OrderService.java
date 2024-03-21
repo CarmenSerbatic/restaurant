@@ -8,15 +8,20 @@ import java.util.List;
 public interface OrderService {
 
     public List<Order> findAllOrder();
+
+    public Order findOrderById(long id);
+
     public List<Order> findOrderDay();
 
     public List<Order> findOrderFinalized();
-    public List<Order> findOrderNotFinalized();
-    public Order findOrderById(long id);
 
     public List<Food> showOrderToKitchen(Order order);
 
     public Order addOrder(Order order);
+
     public Order changeOrderToFinished(Order order);
-    public void deleteOrderById(long id);
+
+//    public void deleteOrderById(long id);
+
+
 }

@@ -12,5 +12,6 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByDate(LocalDate date);
+    List<Order> findByFinalizedAndDate(Boolean finalized, LocalDate date);
 
 }
